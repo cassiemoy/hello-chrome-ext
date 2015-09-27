@@ -4,6 +4,8 @@
 
 // Get content from the current page so that we can look for Twitter handles.
 
+// findUsernames();
+
 function getDOMContent() {
   var str = "@twitterhandle Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. @cassiemoy Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
   return str
@@ -11,8 +13,17 @@ function getDOMContent() {
 
 function findUsernames() {
   var content = getDOMContent();
-  var possibleUsernames = ["@cassiemoy", "@twitterhandle"]
-  // parsing content to find possible usernames
+  var possibleUsernames = []
+  
+  var contentArr = content.split(" ")
+  
+  for (var i = 0; i < contentArr.length; i++) {
+    if (contentArr[i][0] == "@") {
+      possibleUsernames.push(contentArr[i]);
+    }
+  }
+
+  console.log(possibleUsernames);
   return possibleUsernames;
 }
 
