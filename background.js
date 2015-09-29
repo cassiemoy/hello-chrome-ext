@@ -1,6 +1,8 @@
-chrome.runtime.onMessage.addListener(function(msg, sender) {
-  if (msg.from === 'content') {
-        /* Enable the page-action for the requesting tab */
-        chrome.pageAction.show(sender.tab.id);
-    }
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    // console.log(sender.tab ?
+    //             "from a content script:" + sender.tab.url :
+    //             "from the extension");
+    // alert(request.text, sender)
+    sendResponse({farewell: "goodbye"});
 });
