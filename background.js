@@ -4,5 +4,5 @@ chrome.runtime.onMessage.addListener(
     //             "from a content script:" + sender.tab.url :
     //             "from the extension");
     // alert(request.text, sender)
-    sendResponse({farewell: "goodbye"});
+    sendResponse({farewell: "goodbye background"});
 });
