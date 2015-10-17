@@ -36,35 +36,17 @@
 //   });
 // }
 
-
-var global_content = ''
-
-function passContent(data){
-  global_content = data;
-    console.log("2")
-}
-
-
-function getDOMContent() {
-  var str = "@twitterhandle Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. @cassiemoy Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-
+function getDOMContent( fn ) {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.executeScript(tabs[0].id, {file: "content.js"}, function(data) {
       console.log("1");
-      passContent(data[0]);
+      fn( findUsernames(data[0] ));
     });
   });
-  return true;
 }
 
-function findUsernames() {
-  if( getDOMContent() ){
-    var content = global_content;
-  }
-
-  console.log(content);
-  content = "@twitterhandle Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. @cassiemoy Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-
+function findUsernames(data) {
+  content = data;
   var possibleUsernames = [];
   var contentArr = content.split(" ");
 
@@ -73,18 +55,21 @@ function findUsernames() {
       possibleUsernames.push(contentArr[i]);
     }
   }
-
-  // console.log(possibleUsernames);
   return possibleUsernames;
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  var possibleUsernames = findUsernames();
+function possibleUsername(possibleUsernames){
+  //shoule be an array
+  console.log (possibleUsernames)
   var results = "";
 
   for (var i = 0; i < possibleUsernames.length; i++) {
     results +='<li>' + possibleUsernames[i] + '</li>';
   }
-
   document.getElementById('possible-usernames').innerHTML += results;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  var possibleUsernames = getDOMContent(  possibleUsername );
 });
+

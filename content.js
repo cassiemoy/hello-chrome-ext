@@ -1,4 +1,4 @@
-getActivePageContent()
+getActivePageContent();
 
 function getActivePageContent(){
   return document.body.textContent || document.body.innerText;
