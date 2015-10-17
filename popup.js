@@ -36,6 +36,7 @@
 //   });
 // }
 
+
 function getDOMContent( fn ) {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.executeScript(tabs[0].id, {file: "content.js"}, function(data) {
@@ -55,6 +56,15 @@ function findUsernames(data) {
       possibleUsernames.push(contentArr[i]);
     }
   }
+
+  var usernameFrequency = {}
+  for (var i = 0; i < possibleUsernames.length; i++) {
+
+    usernameFrequency[ possibleUsernames[i] ] = 1
+  }
+
+  possibleUsernames = Object.keys(usernameFrequency)
+
   return possibleUsernames;
 }
 
